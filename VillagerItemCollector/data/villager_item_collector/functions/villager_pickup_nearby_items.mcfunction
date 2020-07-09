@@ -11,11 +11,17 @@
 # Tag current villager, which will make the current villager targetable via @e[tag=vic_current]
 tag @s add vic_current
 
+# farm nearby foods
+execute as @e[tag=vic_current,nbt={VillagerData:{profession:"minecraft:farmer"}}] run function villager_item_collector:villager_farm_food
+
 # Find nearby foods villagers like, and tag them with "vic_villagerfood"
-execute as @e[type=item,distance=..1,nbt={PickupDelay:0s}] run function villager_item_collector:nearby_item
+execute as @e[type=item,distance=..1.5] run function villager_item_collector:nearby_item
 
 # Execute as item (we can use @s to target the current item and target the villager with @e[tag=vic_current])
-execute as @e[type=item,distance=..1,tag=vic_villagerfood] run function villager_item_collector:villager_food_item
+execute as @e[type=item,distance=..1.5,tag=vic_villagerfood] run function villager_item_collector:villager_food_item
+
+# plant nearby foods
+execute as @e[tag=vic_current,nbt={VillagerData:{profession:"minecraft:farmer"}}] run function villager_item_collector:villager_plant_food
 
 # Tidy up scoreboard so it isn't full of villagers
 scoreboard players reset @s vic_breadc
